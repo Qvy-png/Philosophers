@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "includes/philosophers.h"
 
 int counter;
 pthread_mutex_t fourchette;
