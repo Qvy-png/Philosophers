@@ -53,7 +53,7 @@ void	philo_creator(t_philostruct *p)
 	{
 		p->philo_list[i - 1].philo_num = i;
 		p->philo_list[i - 1].num_of_meals = 0;
-		p->philo_list[i - 1].last_meal = 0;
+		p->philo_list[i - 1].last_meal = 850;
 		i++;
 	}
 }
@@ -68,12 +68,18 @@ void	init(t_philostruct *p, char **argv)
 		p->num_of_meals = ft_atoi(argv[5]);
 }
 
+long unsigned	get_good_time(void)
+{
+	struct timeval time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
 void	reaper(t_philostruct *p)
 {
-	struct timeval before_time;
-
 	int i;
-	int time_result;
+	long unsigned time_result;
 	int	quit;
 
 	i = 0;
@@ -84,45 +90,62 @@ void	reaper(t_philostruct *p)
 		i = 0;
 		while (i <= p->num_of_phil)
 		{
-			//gerer gettimeofday pour pouvoir obtenir uniquement des ms
-			time_result = gettimeofday(&before_time, NULL) - p->philo_list[i - 1].last_meal;
+			time_result = get_good_time() - p->philo_list[i - 1].last_meal;
 			if (time_result >= p->time_to_die)
 				quit++;
 			i++;
 		}
 	}
+	p->can_display = 1;
 }
+
+
 
 void	ft_eat(t_philostruct *p, int philo_num)
 {
-	
+
+	p->philo[philo_num]->last_meal = get_good_time();
+	p->philo[philo_num]->num_of_meals++;
 }
 
 void	ft_routine(t_philostruct *p)
 {
+	
 	ft_eat(p);
-	ft_sleep(p);
-	ft_think(p);
+	// ft_sleep(p);
+	// ft_think(p);
 }
 
 int main(int argc, char **argv)
 {
 	t_philostruct *p;
 	int i;
+	int	err;
 
-	i = 0;
+	err = 0;
+	i = 1;
 	if (argc == 5 || argc == 6)
 	{
 		p = malloc(sizeof(t_philostruct));
 		init(p, argv);
 		philo_creator(p);
-		philo_launch(p);
+		while (i <= p->num_of_phil)
+		{
+			if (pthread_mutex_init(&p->forks[i - 1], NULL) != 0)
+				printf("\n mutex init failed\n");
+			err = pthread_create(&p->philo_list[i - 1], NULL, &ft_routine, NULL);
+			if (err != 0)
+				printf("\n can't create thread :[%s]", strerror(err));
+			i++;
+		}
+		// printf("%lu\n", get_good_time());
+		// philo_launch(p);
 		// while (i < ft_atoi(argv[1]))
 		// {
 		// 	printf("%d\n", p->philo_list[i].philo_num);
 		// 	i++;
 		// }
 		reaper(p);
+		demallocage(p);
 	}
-	demallocage(p);
 }

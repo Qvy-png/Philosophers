@@ -38,18 +38,18 @@ int main(void)
     int err;
 	pthread_t tid[5];
 
-	i = -1;
-	j = -1;
+	i = 0;
     if (pthread_mutex_init(&fourchette, NULL) != 0)
         return (printf("\n mutex init failed\n"), 1);
-    while(++i < 5)
+    while(i++)
     {
         err = pthread_create(&(tid[i]), NULL, &philo_thread, NULL);
         if (err != 0)
             printf("\ncan't create thread :[%s]", strerror(err));
+        pthread_join(tid[i], NULL);
     }
-	while (++j < 5)
-		pthread_join(tid[j], NULL);
-    pthread_mutex_destroy(&fourchette);
+	// while (++j < 5)
+	// 	pthread_join(tid[j], NULL);
+    // pthread_mutex_destroy(&fourchette);
     return 0;
 }

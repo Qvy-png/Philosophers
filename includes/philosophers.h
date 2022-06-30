@@ -29,22 +29,23 @@
 
 typedef struct s_philo
 {
-	int				philo_num;
-	int				last_meal;
-	int				num_of_meals;
+	int						philo_num;
+	long unsigned			last_meal;
+	int						num_of_meals;
 	
-}					t_philo;
+}							t_philo;
 
 typedef struct s_philostruct
 {
-	int				num_of_phil;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				num_of_meals;
-	pthread_mutex_t *forks;
-	t_philo			*philo_list;
-}					t_philostruct;
+	int							num_of_phil;
+	long unsigned				time_to_die;
+	long unsigned				time_to_eat;
+	long unsigned				time_to_sleep;
+	int							num_of_meals;
+	int							can_display;
+	pthread_mutex_t 			*forks;
+	t_philo						*philo_list;
+}								t_philostruct;
 
 // typedef struct		s_philo
 // {
