@@ -30,16 +30,19 @@
 typedef struct s_philo
 {
 	int				philo_num;
-	struct s_philo	*next;
+	int				last_meal;
+	int				num_of_meals;
 }					t_philo;
 
 typedef struct s_philostruct
 {
-	int		num_of_phil;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		num_of_eat;
+	int				num_of_phil;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_of_meals;
+	pthread_mutex_t *forks;
+	t_philo			*philo_list;
 }					t_philostruct;
 
 // typedef struct		s_philo

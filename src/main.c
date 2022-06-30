@@ -37,6 +37,26 @@ int	ft_atoi(const char *str)
 	return (number * sign);
 }
 
+void	demallocage(t_philostruct *p)
+{
+	free(p->philo_list);
+	free(p);
+}
+
+void	philo_creator(t_philostruct *p)
+{
+	int	i;
+
+	i = 1;
+	p->philo_list = malloc(sizeof(t_philo) * p->num_of_phil + 1);
+	while (i <= p->num_of_phil)
+	{
+		p->philo_list[i - 1].philo_num = i;
+		p->philo_list[i - 1].num_of_meals = 0;
+		p->philo_list[i - 1].last_meal = 0;
+		i++;
+	}
+}
 
 void	init(t_philostruct *p, char **argv)
 {
@@ -44,15 +64,25 @@ void	init(t_philostruct *p, char **argv)
 	p->time_to_die = ft_atoi(argv[2]);
 	p->time_to_eat = ft_atoi(argv[3]);
 	p->time_to_sleep = ft_atoi(argv[4]);
+	p->num_of_meals = ft_atoi(argv[5]);
 }
 
 int main(int argc, char **argv)
 {
 	t_philostruct *p;
+	int i;
 
+	i = 0;
 	if (argc == 5 || argc == 6)
 	{
 		p = malloc(sizeof(t_philostruct));
 		init(p, argv);
+		philo_creator(p);
+		while (i < ft_atoi(argv[1]))
+		{
+			printf("%d\n", p->philo_list[i].philo_num);
+			i++;
+		}
 	}
+	demallocage(p);
 }
