@@ -32,6 +32,7 @@ typedef struct s_philo
 	int				philo_num;
 	int				last_meal;
 	int				num_of_meals;
+	
 }					t_philo;
 
 typedef struct s_philostruct
