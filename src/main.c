@@ -12,47 +12,47 @@
 
 #include "../includes/philosophers.h"
 
-https://github.com/Glagan/42-Philosophers/tree/master/philo_one
-
-void	demallocage(struct s_philostruct *p)
+int	ft_atoi(const char *str)
 {
-	free(p);
+	int	i;
+	int	sign;
+	int	number;
+
+	i = 0;
+	sign = 1;
+	number = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		number = number * 10 + (str[i] - 48);
+		i++;
+	}
+	return (number * sign);
 }
 
-void	init(struct s_philostruct *p)
-{
-	p->argc = 0;
-	p->num_of_phil = 0;
-	p->time_to_die = 0;
-	p->time_to_eat = 0;
-	p->time_to_die = 0;
-	p->num_of_eat = 0;
-	p->argv = NULL;
-}
 
-void	filler(struct s_philostruct *p, int argc, char **argv)
+void	init(t_philostruct *p, char **argv)
 {
-	p->argv = argv;
 	p->num_of_phil = ft_atoi(argv[1]);
 	p->time_to_die = ft_atoi(argv[2]);
 	p->time_to_eat = ft_atoi(argv[3]);
 	p->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 5)
-		p->num_of_eat = ft_atoi(argv[5]);
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	struct s_philostruct	*p;
+	t_philostruct *p;
 
-	p = malloc(sizeof(struct s_philostruct));
-	if (!p)
-		return (0);
-	init(p);
-	if (argc >= 5 && argc <= 6)
+	if (argc == 5 || argc == 6)
 	{
-		filler(p, argc, argv);
+		p = malloc(sizeof(t_philostruct));
+		init(p, argv);
 	}
-	demallocage(p);
-	return (0);
 }
