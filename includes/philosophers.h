@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:36:12 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/05/26 13:37:12 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/05 00:00:40 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,38 +47,13 @@ typedef struct s_philostruct
 	int							can_display;
 	pthread_mutex_t 			*forks;
 	pthread_mutex_t				locker;
+	pthread_mutex_t				is_talking;
 	pthread_t					reaper;
 	t_philo						*philo_list;
 }								t_philostruct;
 
-// typedef struct		s_philo
-// {
-// 	int						position;
-// 	int						is_eating;
-// 	unsigned long long		limit;
-// 	unsigned long long		last_eat;
-// 	int						lfork;
-// 	int						rfork;
-// 	int						eat_count;
-// 	struct s_state			*state;
-// 	pthread_mutex_t			mutex;
-// 	pthread_mutex_t			eat_m;
-// }							t_philo;
-
-// typedef struct		s_state
-// {
-// 	int						amount;
-// 	unsigned long long		time_to_die;
-// 	unsigned long long		time_to_eat;
-// 	unsigned long long		time_to_sleep;
-// 	int						must_eat_count;
-
-// 	unsigned long long		start;
-
-// 	t_philo					*philos;
-// 	pthread_mutex_t			*forks_m;
-// 	pthread_mutex_t			write_m;
-// 	pthread_mutex_t			somebody_dead_m;
-// }							t_state;
+int	ft_atoi(const char *str);
+void	demallocage(t_philostruct *p);
+void	ft_exit(t_philostruct *p, char *message);
 
 #endif

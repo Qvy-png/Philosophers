@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+         #
+#    By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:07:37 by rdel-agu          #+#    #+#              #
-#    Updated: 2022/05/24 17:49:18 by rdel-agu         ###   ########.fr        #
+#    Updated: 2022/07/05 01:24:52 by qvy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philosophers
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -p
 
 RM = rm
 
@@ -25,6 +25,7 @@ LFTSRC = libft
 INCL = includes/philosophers.h
 
 SRC =	src/main.c\
+		src/utils.c\
 
 LFT = 	ft_atoi.c\
 		ft_isalnum.c\
