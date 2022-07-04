@@ -30,8 +30,10 @@
 typedef struct s_philo
 {
 	int						philo_num;
+	pthread_t				philo;
 	long unsigned			last_meal;
 	int						num_of_meals;
+	pthread_mutex_t			philo_locker;
 	
 }							t_philo;
 
@@ -44,6 +46,8 @@ typedef struct s_philostruct
 	int							num_of_meals;
 	int							can_display;
 	pthread_mutex_t 			*forks;
+	pthread_mutex_t				locker;
+	pthread_t					reaper;
 	t_philo						*philo_list;
 }								t_philostruct;
 
