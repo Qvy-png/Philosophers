@@ -76,6 +76,17 @@ long unsigned	get_good_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
+void	displayer(t_philostruct *p, int num_of_phil, char *action)
+{
+	long unsigned time;
+
+	if (p->can_display == 0)
+	{
+		time = get_good_time();
+		printf("%d %d %s", time, num_of_phil, action);
+	}
+}
+
 void	reaper(t_philostruct *p)
 {
 	int i;
@@ -99,13 +110,12 @@ void	reaper(t_philostruct *p)
 	p->can_display = 1;
 }
 
-
-
 void	ft_eat(t_philostruct *p, int philo_num)
 {
 
 	p->philo[philo_num]->last_meal = get_good_time();
 	p->philo[philo_num]->num_of_meals++;
+	displayer(p, philo_num, "has taken a fork");
 }
 
 void	ft_routine(t_philostruct *p)
