@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/07 21:58:11 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/08 00:54:17 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ void	philo_creator(t_philostruct *p)
 {
 	int	i;
 
-	i = 1;
-	while (i <= p->num_of_phil)
+	i = 0;
+	while (i < p->num_of_phil)
 	{
-		memset(&p->philo_list[i - 1], 0, sizeof(t_philo));
-		p->philo_list[i - 1].philo_num = i;
-		p->philo_list[i - 1].num_of_meals = 0;
-		p->philo_list[i - 1].last_meal = 0;
+		memset(&p->philo_list[i ], 0, sizeof(t_philo));
+		p->philo_list[i].philo_num = i;
+		p->philo_list[i].num_of_meals = 0;
+		p->philo_list[i].last_meal = 0;
 		i++;
 	}
 }
@@ -108,10 +108,10 @@ void	put_fork_down(t_philostruct *p, int philo_num)
 void	ft_eat(t_philostruct *p, int philo_num)
 {
 	pick_fork(p, philo_num);
-	pthread_mutex_lock(&p->philo_list[philo_num - 1].philo_locker);
+	pthread_mutex_lock(&p->philo_list[philo_num].philo_locker);
 	p->philo_list[philo_num].last_meal = get_good_time();
 	p->philo_list[philo_num].num_of_meals++;
-	pthread_mutex_unlock(&p->philo_list[philo_num - 1].philo_locker);
+	pthread_mutex_unlock(&p->philo_list[philo_num].philo_locker);
 	displayer(p, philo_num, "is eating\n");
 	usleep(p->time_to_eat * 1000);
 	put_fork_down(p, philo_num);
@@ -155,12 +155,12 @@ void	philo_launcher(t_philostruct *p)
 	{
 		pthread_mutex_init(&p->forks[p->which_philo], NULL);
 		pthread_create(&p->philo_list[p->which_philo].philo, NULL, &ft_routine, p);
-		i++;
+		p->which_philo++;
 	}
 	pthread_mutex_unlock(&p->locker);
 	pthread_create(&p->reaper, NULL, &reaper, p);
 	while (++i <= p->num_of_phil)
-		pthread_join(p->philo_list[i - 1].philo, NULL);
+		pthread_join(p->philo_list[i].philo, NULL);
 	pthread_join(p->reaper, NULL);
 }
 
