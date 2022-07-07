@@ -6,7 +6,7 @@
 #    By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:07:37 by rdel-agu          #+#    #+#              #
-#    Updated: 2022/07/05 01:24:52 by qvy              ###   ########.fr        #
+#    Updated: 2022/07/07 16:35:13 by qvy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philosophers
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -p
+CFLAGS = -Wall -Werror -Wextra -g
 
 RM = rm
 
@@ -26,6 +26,7 @@ INCL = includes/philosophers.h
 
 SRC =	src/main.c\
 		src/utils.c\
+		src/init.c\
 
 LFT = 	ft_atoi.c\
 		ft_isalnum.c\

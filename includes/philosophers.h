@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:36:12 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/05 00:00:40 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/07 18:08:46 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ typedef struct s_philo
 typedef struct s_philostruct
 {
 	int							num_of_phil;
+	long unsigned				start;
 	long unsigned				time_to_die;
 	long unsigned				time_to_eat;
 	long unsigned				time_to_sleep;
 	int							num_of_meals;
 	int							can_display;
+	int							which_philo;
 	pthread_mutex_t 			*forks;
 	pthread_mutex_t				locker;
 	pthread_mutex_t				is_talking;
@@ -55,5 +57,8 @@ typedef struct s_philostruct
 int	ft_atoi(const char *str);
 void	demallocage(t_philostruct *p);
 void	ft_exit(t_philostruct *p, char *message);
+void	init(t_philostruct *p, char **argv);
+void	init_mutex(t_philostruct *p);
+long unsigned	get_good_time(void);
 
 #endif
