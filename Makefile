@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+         #
+#    By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:07:37 by rdel-agu          #+#    #+#              #
-#    Updated: 2022/07/08 14:44:20 by qvy              ###   ########.fr        #
+#    Updated: 2022/07/08 14:50:40 by rdel-agu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philosophers
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra -pthread -g #-fsanitize=thread
 
 RM = rm
 

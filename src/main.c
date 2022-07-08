@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/08 14:43:33 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/08 15:03:54 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	philo_creator(t_philostruct *p)
 		p->philo_list[i].philo_num = i;
 		p->philo_list[i].num_of_meals = 0;
 		p->philo_list[i].last_meal = 0;
+		p->philo_list[i].can_sleep = 0;
+		p->philo_list[i].can_think = 0;
 		i++;
 	}
 }
@@ -90,9 +92,9 @@ void	pick_fork(t_philostruct *p, int philo_num)
 		left = right - 1;
 	printf("Je suis philo %d, gauche = %d et droite = %d\n", philo_num, left, right);
 	pthread_mutex_lock(&p->forks[left]);
-	displayer(p, philo_num - 1, "has taken a fork\n");
+	displayer(p, philo_num + 1, "has taken a fork\n");
 	pthread_mutex_lock(&p->forks[right]);
-	displayer(p, philo_num - 1, "has taken a fork\n");
+	displayer(p, philo_num + 1, "has taken a fork\n");
 }
 
 void	put_fork_down(t_philostruct *p, int philo_num)
@@ -100,10 +102,12 @@ void	put_fork_down(t_philostruct *p, int philo_num)
 	int	left;
 	int	right;
 
-	printf("\033[0;31mphilo%d : puts fork down\033[0m\n", philo_num - 1);
+	printf("\033[0;31mphilo%d : puts fork down\033[0m\n", philo_num + 1);
+	right = philo_num;
 	if (philo_num == 0)
 		left = p->num_of_phil - 1;
-	right = philo_num;
+	else
+		left = right - 1;
 	pthread_mutex_unlock(&p->forks[left]);
 	pthread_mutex_unlock(&p->forks[right]);
 }
@@ -115,20 +119,31 @@ void	ft_eat(t_philostruct *p, int philo_num)
 	p->philo_list[philo_num].last_meal = get_good_time();
 	p->philo_list[philo_num].num_of_meals++;
 	pthread_mutex_unlock(&p->philo_list[philo_num].philo_locker);
-	displayer(p, philo_num - 1, "is eating\n");
+	displayer(p, philo_num + 1, "is eating\n");
 	usleep(p->time_to_eat * 1000);
 	put_fork_down(p, philo_num);
+	p->philo_list[philo_num].can_sleep = 1;
+	
 }
 
 void	ft_sleep(t_philostruct *p, int philo_num)
 {
-	displayer(p, philo_num, "is sleeping\n");
-	usleep(p->time_to_sleep * 1000);
+	if (p->philo_list[philo_num].can_sleep == 1)
+	{
+		displayer(p, philo_num + 1, "is sleeping\n");
+		usleep(p->time_to_sleep * 1000);
+		p->philo_list[philo_num].can_think = 1;
+		p->philo_list[philo_num].can_sleep = 0;
+	}
 }
 
 void	ft_think(t_philostruct *p, int philo_num)
 {
-	displayer(p, philo_num, "is thinking\n");
+	if (p->philo_list[philo_num].can_think == 1)
+	{
+		displayer(p, philo_num + 1, "is thinking\n");
+		p->philo_list[philo_num].can_think = 0;
+	}
 }
 
 void	*ft_routine(void *content)
@@ -141,7 +156,7 @@ void	*ft_routine(void *content)
 	while (p->can_display != 1) // mettre aussi un compteur dans la struct du philo pour compter le nombre de repas, et faire une fonction qui va check si tous les philos ont fini de manger
 	{
 		usleep(100);
-		if (i % 2)
+		if (!(i % 2))
 			usleep(p->time_to_eat * 1000);
 		ft_eat(p, i);
 		ft_sleep(p, i);
@@ -156,7 +171,7 @@ void	philo_launcher(t_philostruct *p)
 	
 	i = 0;
 	pthread_mutex_lock(&p->locker);
-	while (p->which_philo < p->num_of_phil)
+	while (p->which_philo < p->num_of_phil - 1)
 	{
 		printf("%d\n", p->which_philo);
 		pthread_create(&p->philo_list[p->which_philo].philo, NULL, &ft_routine, p);
