@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:33:00 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/08 14:35:23 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/08 16:50:02 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init(t_philostruct *p, char **argv)
 	p->philo_list = malloc(p->num_of_phil * sizeof(t_philo));
 	if (!p->philo_list)
 		ft_exit(p, "failed to malloc philo\n");
-	p->forks = malloc(sizeof(pthread_mutex_t) * (p->num_of_phil) + 1);
+	p->forks = malloc(sizeof(pthread_mutex_t) * (p->num_of_phil));
 	if (!p->forks)
 		ft_exit(p, "failed to malloc forks\n");
 	p->start = get_good_time();	
