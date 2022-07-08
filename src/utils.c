@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 23:57:21 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/07 17:01:42 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/08 11:59:15 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	ft_exit(t_philostruct *p, char *message)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (message)
 		printf("Error, %s failed\n", message);
-	while (i <= p->num_of_phil)
+	while (i < p->num_of_phil)
 	{
-		pthread_mutex_destroy(&p->philo_list[i - 1].philo_locker);
-		pthread_mutex_destroy(&p->forks[i - 1]);
+		pthread_mutex_destroy(&p->philo_list[i].philo_locker);
+		pthread_mutex_destroy(&p->forks[i]);
 	}
 	pthread_mutex_destroy(&p->locker);
 	pthread_mutex_destroy(&p->is_talking);

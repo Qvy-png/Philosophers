@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:33:00 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/07 18:09:36 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/08 14:35:23 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,28 @@ void	init(t_philostruct *p, char **argv)
     p->which_philo = 0;
 	if (argv[5])
 		p->num_of_meals = ft_atoi(argv[5]);
-	p->philo_list = malloc(p->num_of_phil * sizeof(t_philo) + 1);
+	p->philo_list = malloc(p->num_of_phil * sizeof(t_philo));
 	if (!p->philo_list)
-		ft_exit(p, "failed to malloc philo");
-	p->forks = malloc(p->num_of_phil * sizeof(pthread_mutex_t));
+		ft_exit(p, "failed to malloc philo\n");
+	p->forks = malloc(sizeof(pthread_mutex_t) * (p->num_of_phil) + 1);
 	if (!p->forks)
-		ft_exit(p, "failed to malloc forks");
+		ft_exit(p, "failed to malloc forks\n");
 	p->start = get_good_time();	
+	init_mutex(p);
 }
 
 void	init_mutex(t_philostruct *p)
 {
 	int	i;
 
-	i = 1;
-	while (i <= p->num_of_phil)
+	i = 0;
+	while (i < p->num_of_phil)
 	{
 		pthread_mutex_init(&p->forks[i], NULL);
 		pthread_mutex_init(&p->philo_list[i].philo_locker, NULL);
 		i++;
 	}
 	pthread_mutex_init(&p->is_talking, NULL);
-    // pthread_mutex_init(&p->locker, NULL);
+    pthread_mutex_init(&p->locker, NULL);
+	pthread_mutex_init(&p->is_talking, NULL);
 }
