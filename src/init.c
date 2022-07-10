@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:33:00 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/08 16:50:02 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:10:35 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	init_mutex(t_philostruct *p)
 	pthread_mutex_init(&p->is_talking, NULL);
     pthread_mutex_init(&p->locker, NULL);
 	pthread_mutex_init(&p->is_talking, NULL);
+	
 }
