@@ -6,21 +6,21 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/11 13:51:20 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/11 18:39:08 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	micro_usleep(int time)
+void micro_sleep(long unsigned time)
 {
-	int		i;
+	long unsigned	actual;
 
-	i = 0;
-	while (i < time)
+	actual = get_good_time();
+	while (get_good_time() - actual < time / 1000)
 	{
-		usleep(1000);
-		i++;
+		// printf("%lu - %lu < %lu\nvrai resultat = %lu\n", get_good_time(), actual, time, get_good_time() - actual);
+		usleep(500);
 	}
 }
 
@@ -46,12 +46,53 @@ void	displayer(t_philostruct *p, int num_of_phil, char *action)
 	
 }
 
+// void	*reaper(void *content)
+// {
+// 	t_philostruct *p;
+// 	int i;
+// 	long unsigned time_result;
+// 	int	quit;
+// 	int dead;
+	
+// 	p = (t_philostruct *)content;
+// 	i = 0;
+// 	quit = 0;
+// 	time_result = 0;
+// 	while (quit == 0)
+// 	{
+// 		i = 0;
+// 		while (i < p->num_of_phil /*&&  p->philo_list[i].last_meal > 0*/)
+// 		{
+// 			while (p->philo_list[i].last_meal <= 0)
+// 				i++;
+// 			// else
+// 			// {
+// 			pthread_mutex_lock(&p->philo_list[i].philo_locker);
+// 			time_result = get_good_time() - p->philo_list[i].last_meal;
+// 			printf("je suis philo %d, %lu - %lu = %lu\n", i, get_good_time(), p->philo_list[i].last_meal, get_good_time() - p->philo_list[i].last_meal);
+// 			pthread_mutex_unlock(&p->philo_list[i].philo_locker);
+// 			// printf("\033[0;32mscan me : %lu - %lu\033[0m\n", time_result, p->time_to_die);
+// 			if (time_result >= p->time_to_die)
+// 			{
+// 				dead = i;
+// 				quit++;
+// 			}
+// 			i++;
+// 			// }
+// 		}
+// 	}
+// 	p->can_display = 1;
+// 	printf("\033[0;32mhahaha je suis la mort, j'ai tue %d\033[0m\n", dead);
+// 	return (NULL);
+// }
+
 void	*reaper(void *content)
 {
 	t_philostruct *p;
 	int i;
 	long unsigned time_result;
 	int	quit;
+	int dead;
 
 	p = (t_philostruct *)content;
 	i = 0;
@@ -70,12 +111,15 @@ void	*reaper(void *content)
 			pthread_mutex_unlock(&p->philo_list[i].philo_locker);
 			// printf("\033[0;32mscan me : %lu - %lu\033[0m\n", time_result, p->time_to_die);
 			if (time_result >= p->time_to_die)
+			{
+				dead = i;
 				quit++;
+			}
 			i++;
 		}
 	}
 	p->can_display = 1;
-	printf("\033[0;32mhahaha je suis la mort\033[0m\n");
+	printf("\033[0;32m%lu %d has died\033[0m\n",get_good_time() - p->start, dead + 1);
 	return (NULL);
 }
 
@@ -112,7 +156,7 @@ void	pick_fork(t_philostruct *p, int philo_num)
 	else
 		left = right - 1;
 	// printf("Je suis philo %d, gauche = %d et droite = %d\n", philo_num, left, right);
-	if (philo_num % 2 == 0)
+	if (!philo_num % 2 == 0)
 	{
 		pthread_mutex_lock(&p->forks[left]);
 		displayer(p, philo_num, "has taken a fork\n");
@@ -138,7 +182,7 @@ void	put_fork_down(t_philostruct *p, int philo_num)
 		left = p->num_of_phil - 1;
 	else
 		left = right - 1;
-	if (!philo_num % 2 == 0)
+	if (philo_num % 2 == 0)
 	{
 		pthread_mutex_unlock(&p->forks[right]);
 		// printf("\033[0;31mphilo%d : puts left fork down\033[0m\n", philo_num);
@@ -165,7 +209,7 @@ void	ft_eat(t_philostruct *p, int philo_num)
 	p->philo_list[philo_num - 1].num_of_meals += 1;
 	// pthread_mutex_unlock(&p->philo_list[philo_num].philo_locker);
 	displayer(p, philo_num, "is eating\n");
-	usleep(p->time_to_eat * 1000);
+	micro_sleep(p->time_to_eat * 1000);
 	put_fork_down(p, philo_num);
 	// printf("last meal = %lu \n, num of meals%d\n", p->philo_list[philo_num].last_meal, p->philo_list[philo_num].num_of_meals);
 }
@@ -173,7 +217,7 @@ void	ft_eat(t_philostruct *p, int philo_num)
 void	ft_sleep(t_philostruct *p, int philo_num)
 {
 	displayer(p, philo_num, "is sleeping\n");
-	usleep(p->time_to_sleep * 1000);
+	micro_sleep(p->time_to_sleep * 1000);
 	// displayer(p, philo_num, "is thinking\n");
 }
 
@@ -208,18 +252,26 @@ void	philo_launcher(t_philostruct *p)
 	i = 0;
 	s()->which_philo = 0;
 	// pthread_mutex_lock(&p->locker);
-	while (s()->which_philo < p->num_of_phil)
+	if (p->num_of_phil == 1)
 	{
-		usleep(50);
-		pthread_create(&p->philo_list[s()->which_philo].philo, NULL, &ft_routine, p);
-		s()->which_philo = s()->which_philo + 1;
+		micro_sleep(p->time_to_die * 1000);
+		displayer(p, 1, "has died\n");
 	}
-	// pthread_mutex_unlock(&p->locker);
-	usleep(10000);
-	pthread_create(&p->reaper, NULL, &reaper, p);
-	while (++i < p->num_of_phil)
-		pthread_join(p->philo_list[i].philo, NULL);
-	pthread_join(p->reaper, NULL);
+	else
+	{
+		while (s()->which_philo < p->num_of_phil)
+		{
+			usleep(50);
+			pthread_create(&p->philo_list[s()->which_philo].philo, NULL, &ft_routine, p);
+			s()->which_philo = s()->which_philo + 1;
+		}
+		// pthread_mutex_unlock(&p->locker);
+		micro_sleep(10000);
+		pthread_create(&p->reaper, NULL, &reaper, p);
+		while (++i < p->num_of_phil)
+			pthread_join(p->philo_list[i].philo, NULL);
+		pthread_join(p->reaper, NULL);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
