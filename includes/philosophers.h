@@ -6,7 +6,7 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:36:12 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/08 14:54:17 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:27:52 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@
 # define THINK	3
 # define DIED 	4
 # define OVER 	5
+
+typedef struct s_singleton
+{
+	int			which_philo;
+}				t_singleton;
 
 typedef struct s_philo
 {
@@ -56,6 +61,7 @@ typedef struct s_philostruct
 	t_philo						*philo_list;
 }								t_philostruct;
 
+t_singleton *s(void);
 int	ft_atoi(const char *str);
 void	demallocage(t_philostruct *p);
 void	ft_exit(t_philostruct *p, char *message);

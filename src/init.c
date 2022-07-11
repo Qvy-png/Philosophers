@@ -3,23 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:33:00 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/10 20:10:35 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/11 13:27:15 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
+t_singleton *s(void)
+{
+	static t_singleton	*s = NULL;
+
+	if (!s)
+	{
+		s = malloc(sizeof(t_singleton));
+		if (!s)
+			return (NULL);
+	}
+	return (s);
+}
+
 void	init(t_philostruct *p, char **argv)
 {
+	t_singleton	*single;
+
+	single = s();
 	p->num_of_phil = ft_atoi(argv[1]);
 	p->time_to_die = ft_atoi(argv[2]);
 	p->time_to_eat = ft_atoi(argv[3]);
 	p->time_to_sleep = ft_atoi(argv[4]);
     p->can_display = 0;
-    p->which_philo = 0;
+   	s()->which_philo = 0;
 	if (argv[5])
 		p->num_of_meals = ft_atoi(argv[5]);
 	p->philo_list = malloc(p->num_of_phil * sizeof(t_philo));
@@ -46,5 +62,6 @@ void	init_mutex(t_philostruct *p)
 	pthread_mutex_init(&p->is_talking, NULL);
     pthread_mutex_init(&p->locker, NULL);
 	pthread_mutex_init(&p->is_talking, NULL);
-	
 }
+
+

@@ -6,11 +6,11 @@
 #    By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:07:37 by rdel-agu          #+#    #+#              #
-#    Updated: 2022/07/08 14:50:40 by rdel-agu         ###   ########.fr        #
+#    Updated: 2022/07/11 11:19:51 by rdel-agu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philosophers
+NAME = philo
 
 CC = cc
 
