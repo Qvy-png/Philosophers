@@ -6,13 +6,13 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/11 18:39:08 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/11 18:54:50 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void micro_sleep(long unsigned time)
+void	micro_sleep(long unsigned time)
 {
 	long unsigned	actual;
 
@@ -26,7 +26,7 @@ void micro_sleep(long unsigned time)
 
 long unsigned	get_good_time(void)
 {
-	struct timeval time;
+	struct timeval	time;
 
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
@@ -34,16 +34,15 @@ long unsigned	get_good_time(void)
 
 void	displayer(t_philostruct *p, int num_of_phil, char *action)
 {
-	long unsigned time;
+	long unsigned	time;
 
-	time = get_good_time()- p->start;
+	time = get_good_time() - p->start;
 	pthread_mutex_lock(&p->is_talking);
 	if (p->can_display == 0)
 	{
 		printf("%lu %d %s", time, num_of_phil, action);
 	}
 	pthread_mutex_unlock(&p->is_talking);
-	
 }
 
 // void	*reaper(void *content)
@@ -53,7 +52,7 @@ void	displayer(t_philostruct *p, int num_of_phil, char *action)
 // 	long unsigned time_result;
 // 	int	quit;
 // 	int dead;
-	
+//
 // 	p = (t_philostruct *)content;
 // 	i = 0;
 // 	quit = 0;
@@ -88,11 +87,11 @@ void	displayer(t_philostruct *p, int num_of_phil, char *action)
 
 void	*reaper(void *content)
 {
-	t_philostruct *p;
-	int i;
-	long unsigned time_result;
-	int	quit;
-	int dead;
+	t_philostruct	*p;
+	int				i;
+	long unsigned	time_result;
+	int				quit;
+	int				dead;
 
 	p = (t_philostruct *)content;
 	i = 0;
@@ -101,7 +100,7 @@ void	*reaper(void *content)
 	while (quit == 0)
 	{
 		i = 0;
-		while (i < p->num_of_phil &&  p->philo_list[i].last_meal > 0)
+		while (i < p->num_of_phil && p->philo_list[i].last_meal > 0)
 		{
 			if (p->philo_list[i].last_meal <= 0)
 				i++;
@@ -119,7 +118,7 @@ void	*reaper(void *content)
 		}
 	}
 	p->can_display = 1;
-	printf("\033[0;32m%lu %d has died\033[0m\n",get_good_time() - p->start, dead + 1);
+	printf("\033[0;32m%lu %d has died\033[0m\n", get_good_time() - p->start, dead + 1);
 	return (NULL);
 }
 
@@ -149,7 +148,6 @@ void	pick_fork(t_philostruct *p, int philo_num)
 	int	left;
 	int	right;
 
-	
 	right = philo_num - 1;
 	if (philo_num == 1)
 		left = p->num_of_phil - 1;
@@ -191,7 +189,6 @@ void	put_fork_down(t_philostruct *p, int philo_num)
 	}
 	else
 	{
-		
 		pthread_mutex_unlock(&p->forks[left]);
 		// printf("\033[0;31mphilo%d : puts left fork down\033[0m\n", philo_num);
 		pthread_mutex_unlock(&p->forks[right]);
@@ -201,8 +198,6 @@ void	put_fork_down(t_philostruct *p, int philo_num)
 
 void	ft_eat(t_philostruct *p, int philo_num)
 {
-	// if (philo_num == 1)
-	// printf("\033[0;31mje suis philo : %d\033[0m\n", philo_num);
 	pick_fork(p, philo_num);
 	// pthread_mutex_lock(&p->philo_list[philo_num].philo_locker);
 	p->philo_list[philo_num - 1].last_meal = get_good_time();
@@ -218,7 +213,6 @@ void	ft_sleep(t_philostruct *p, int philo_num)
 {
 	displayer(p, philo_num, "is sleeping\n");
 	micro_sleep(p->time_to_sleep * 1000);
-	// displayer(p, philo_num, "is thinking\n");
 }
 
 void	ft_think(t_philostruct *p, int philo_num)
@@ -229,15 +223,12 @@ void	ft_think(t_philostruct *p, int philo_num)
 void	*ft_routine(void *content)
 {
 	t_philostruct	*p;
-	int 			i;
+	int				i;
 
 	p = (t_philostruct *)content;
 	i = s()->which_philo;
 	while (p->can_display != 1) // mettre aussi un compteur dans la struct du philo pour compter le nombre de repas, et faire une fonction qui va check si tous les philos ont fini de manger
 	{
-		// if (!(i % 2))
-		// 	usleep(p->time_to_eat * 1000);
-		// usleep(100);
 		ft_eat(p, i);
 		ft_sleep(p, i);
 		ft_think(p, i);
@@ -248,10 +239,9 @@ void	*ft_routine(void *content)
 void	philo_launcher(t_philostruct *p)
 {
 	int	i;
-	
+
 	i = 0;
 	s()->which_philo = 0;
-	// pthread_mutex_lock(&p->locker);
 	if (p->num_of_phil == 1)
 	{
 		micro_sleep(p->time_to_die * 1000);
@@ -265,7 +255,6 @@ void	philo_launcher(t_philostruct *p)
 			pthread_create(&p->philo_list[s()->which_philo].philo, NULL, &ft_routine, p);
 			s()->which_philo = s()->which_philo + 1;
 		}
-		// pthread_mutex_unlock(&p->locker);
 		micro_sleep(10000);
 		pthread_create(&p->reaper, NULL, &reaper, p);
 		while (++i < p->num_of_phil)
@@ -276,13 +265,13 @@ void	philo_launcher(t_philostruct *p)
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_philostruct *p;
+	t_philostruct	*p;
 
 	p = malloc(sizeof(t_philostruct));
 	if (!p)
-		return(0);
+		return (0);
 	if (argc == 5 || argc == 6)
 	{
 		init(p, argv);
