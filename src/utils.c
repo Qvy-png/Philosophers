@@ -6,7 +6,7 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 23:57:21 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/11 21:02:44 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/12 19:00:06 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ void	demallocage(t_philostruct *p)
 	{
 		pthread_mutex_destroy(&p->philo_list[i].philo_locker);
 		pthread_mutex_destroy(&p->forks[i]);
-		pthread_detach(p->philo_list[i].philo);
 		i++;
 	}
 	pthread_mutex_destroy(&p->locker);
 	pthread_mutex_destroy(&p->is_talking);
 	free(p->forks);
-	free(p->philo_list);
 	free(s());
+	free(p->philo_list);
+	free(p);
 }

@@ -6,7 +6,7 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:36:12 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/11 20:08:32 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:39:07 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_philostruct
 	pthread_mutex_t				locker;
 	pthread_mutex_t				is_talking;
 	pthread_t					reaper;
+	pthread_t					grailleur;
 	t_philo						*philo_list;
 }								t_philostruct;
 
