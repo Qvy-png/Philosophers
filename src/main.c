@@ -6,7 +6,7 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/13 17:11:32 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/13 20:28:05 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,38 +89,38 @@ void	*reaper(void *content)
 	return (NULL);
 }
 
-void	*grailleur(void *content)
-{
-	t_philostruct	*p;
-	int				i;
-	int				quit;
-	int				count;
+// void	*grailleur(void *content)
+// {
+// 	t_philostruct	*p;
+// 	int				i;
+// 	int				quit;
+// 	int				count;
 	
-	p = (t_philostruct *)content;
-	i = 0;	
-	quit = 0;
-	count = 0;
-	while (quit == 0)
-	{
-		i = 0;
-		count = 0;
-		while (i < p->num_of_phil)
-		{
-			pthread_mutex_lock(&p->philo_list[i].philo_locker);
-			if (p->philo_list[i].num_of_meals == p->num_of_meals)
-				count++;
-			if (count == p->num_of_phil)
-				quit++;
-			pthread_mutex_unlock(&p->philo_list[i].philo_locker);
-			i++;
-		}	
-	}
-	pthread_mutex_lock(&p->locker);
-	if (p->can_display == 0)
-		p->can_display = 1;
-	pthread_mutex_unlock(&p->locker);
-	return (NULL);
-}
+// 	p = (t_philostruct *)content;
+// 	i = 0;	
+// 	quit = 0;
+// 	count = 0;
+// 	while (quit == 0)
+// 	{
+// 		i = 0;
+// 		count = 0;
+// 		while (i < p->num_of_phil)
+// 		{
+// 			pthread_mutex_lock(&p->philo_list[i].philo_locker);
+// 			if (p->philo_list[i].num_of_meals == p->num_of_meals)
+// 				count++;
+// 			if (count == p->num_of_phil)
+// 				quit++;
+// 			pthread_mutex_unlock(&p->philo_list[i].philo_locker);
+// 			i++;
+// 		}	
+// 	}
+// 	pthread_mutex_lock(&p->locker);
+// 	if (p->can_display == 0)
+// 		p->can_display = 1;
+// 	pthread_mutex_unlock(&p->locker);
+// 	return (NULL);
+// }
 
 void	philo_creator(t_philostruct *p)
 {
@@ -260,13 +260,13 @@ void	philo_launcher(t_philostruct *p)
 		}
 		micro_sleep(10000);
 		pthread_create(&p->reaper, NULL, &reaper, p);
-		if (p->num_of_meals > -1)
-			pthread_create(&p->grailleur, NULL, &grailleur, p);
+		// if (p->num_of_meals > -1)
+		// 	pthread_create(&p->grailleur, NULL, &grailleur, p);
 		while (++i < p->num_of_phil)
 			pthread_join(p->philo_list[i].philo, NULL);
 		pthread_join(p->reaper, NULL);
-		if (p->num_of_meals > -1)
-			pthread_join(p->grailleur, NULL);
+		// if (p->num_of_meals > -1)
+		// 	pthread_join(p->grailleur, NULL);
 	}
 }
 
