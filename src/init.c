@@ -6,7 +6,7 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:33:00 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/11 18:49:25 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:44:13 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	init(t_philostruct *p, char **argv)
 	s()->which_philo = 0;
 	if (argv[5])
 		p->num_of_meals = ft_atoi(argv[5]);
+	else
+		p->num_of_meals = -1;
 	p->philo_list = malloc(p->num_of_phil * sizeof(t_philo));
 	if (!p->philo_list)
 		ft_exit(p, "failed to malloc philo\n");

@@ -6,7 +6,7 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/12 19:32:27 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:11:32 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	micro_sleep(long unsigned time)
 	long unsigned	actual;
 
 	actual = get_good_time();
-	while (get_good_time() - actual < time / 1000)
-		usleep(100);
+	while ((get_good_time() - actual) * 1000 < time)
+		usleep(50);
 }
 
 long unsigned	get_good_time(void)
@@ -80,8 +80,44 @@ void	*reaper(void *content)
 		}
 	}
 	pthread_mutex_lock(&p->locker);
-	p->can_display = 1;
-	printf("\033[0;32m%lu %d has died\033[0m\n", get_good_time() - p->start, dead + 1);
+	if (p->can_display == 0)
+	{
+		p->can_display = 1;
+		printf("\033[0;32m%lu %d has died\033[0m\n", get_good_time() - p->start, dead + 1);
+	}
+	pthread_mutex_unlock(&p->locker);
+	return (NULL);
+}
+
+void	*grailleur(void *content)
+{
+	t_philostruct	*p;
+	int				i;
+	int				quit;
+	int				count;
+	
+	p = (t_philostruct *)content;
+	i = 0;	
+	quit = 0;
+	count = 0;
+	while (quit == 0)
+	{
+		i = 0;
+		count = 0;
+		while (i < p->num_of_phil)
+		{
+			pthread_mutex_lock(&p->philo_list[i].philo_locker);
+			if (p->philo_list[i].num_of_meals == p->num_of_meals)
+				count++;
+			if (count == p->num_of_phil)
+				quit++;
+			pthread_mutex_unlock(&p->philo_list[i].philo_locker);
+			i++;
+		}	
+	}
+	pthread_mutex_lock(&p->locker);
+	if (p->can_display == 0)
+		p->can_display = 1;
 	pthread_mutex_unlock(&p->locker);
 	return (NULL);
 }
@@ -198,7 +234,6 @@ void	*ft_routine(void *content)
 		ft_sleep(p, i);
 		ft_think(p, i);
 	}
-	
 	return (NULL);
 }
 
@@ -211,7 +246,7 @@ void	philo_launcher(t_philostruct *p)
 	if (p->num_of_phil == 1)
 	{
 		micro_sleep(p->time_to_die * 1000);
-		displayer(p, 1, "has died\n");
+		printf("\033[0;32m%lu 1 has died\033[0m\n", get_good_time() - p->start);
 	}
 	else
 	{
@@ -225,12 +260,14 @@ void	philo_launcher(t_philostruct *p)
 		}
 		micro_sleep(10000);
 		pthread_create(&p->reaper, NULL, &reaper, p);
+		if (p->num_of_meals > -1)
+			pthread_create(&p->grailleur, NULL, &grailleur, p);
 		while (++i < p->num_of_phil)
 			pthread_join(p->philo_list[i].philo, NULL);
 		pthread_join(p->reaper, NULL);
+		if (p->num_of_meals > -1)
+			pthread_join(p->grailleur, NULL);
 	}
-	return ;
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -249,5 +286,6 @@ int	main(int argc, char **argv)
 		philo_launcher(p);
 		demallocage(p);
 	}
+	free(p);
 	return (0);
 }

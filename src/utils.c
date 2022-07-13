@@ -6,7 +6,7 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 23:57:21 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/12 19:00:06 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:07:54 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,4 @@ void	demallocage(t_philostruct *p)
 	free(p->forks);
 	free(s());
 	free(p->philo_list);
-	free(p);
 }
