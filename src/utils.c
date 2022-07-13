@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 23:57:21 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/13 16:07:54 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/13 22:01:38 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	ft_atoi(const char *str)
 
 void	ft_exit(t_philostruct *p, char *message)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	if (message)
 		printf("Error, %s failed\n", message);
 	demallocage(p);

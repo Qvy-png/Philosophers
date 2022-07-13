@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/13 20:28:05 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/13 23:41:45 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ long unsigned	get_good_time(void)
 void	displayer(t_philostruct *p, int num_of_phil, char *action)
 {
 	long unsigned	time;
-	int 			disp;
+	// int 			disp;
 
 	pthread_mutex_lock(&p->locker);
-	disp = p->can_display;
+	// disp = p->can_display;
 	
 	time = get_good_time() - p->start;
 	pthread_mutex_lock(&p->is_talking);
@@ -150,7 +150,7 @@ void	pick_fork(t_philostruct *p, int philo_num)
 		left = p->num_of_phil - 1;
 	else
 		left = right - 1;
-	if (philo_num % 2 == 0)
+	if (!philo_num % 2 == 0)
 	{
 		pthread_mutex_lock(&p->forks[left]);
 		displayer(p, philo_num, "has taken a fork\n");
@@ -216,13 +216,13 @@ void	*ft_routine(void *content)
 {
 	t_philostruct	*p;
 	int				i;
-	int				disp;
+	// int				disp;
 	int				bricolage;
 
 	p = (t_philostruct *)content;
 	pthread_mutex_lock(&p->locker);
 	i = s()->which_philo;
-	disp = p->can_display;
+	// disp = p->can_display;
 	pthread_mutex_unlock(&p->locker);
 	bricolage = 0;
 	while (bricolage != 1) // mettre aussi un compteur dans la struct du philo pour compter le nombre de repas, et faire une fonction qui va check si tous les philos ont fini de manger
