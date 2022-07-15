@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 23:57:21 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/13 22:01:38 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/15 03:47:46 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,6 @@ int	ft_atoi(const char *str)
 	return (number * sign);
 }
 
-void	ft_exit(t_philostruct *p, char *message)
-{
-	// int	i;
-
-	// i = 0;
-	if (message)
-		printf("Error, %s failed\n", message);
-	demallocage(p);
-	exit(1);
-}
-
 void	demallocage(t_philostruct *p)
 {
 	int	i;
@@ -64,4 +53,34 @@ void	demallocage(t_philostruct *p)
 	free(p->forks);
 	free(s());
 	free(p->philo_list);
+}
+
+void	micro_sleep(long unsigned time)
+{
+	long unsigned	actual;
+
+	actual = get_good_time();
+	while ((get_good_time() - actual) * 1000 < time)
+		usleep(50);
+}
+
+long unsigned	get_good_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+void	displayer(t_philostruct *p, int num_of_phil, char *action)
+{
+	long unsigned	time;
+
+	pthread_mutex_lock(&p->locker);
+	time = get_good_time() - p->start;
+	pthread_mutex_lock(&p->is_talking);
+	if (p->can_display == 0)
+		printf("%lu %d %s", time, num_of_phil, action);
+	pthread_mutex_unlock(&p->is_talking);
+	pthread_mutex_unlock(&p->locker);
 }

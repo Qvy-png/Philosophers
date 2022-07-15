@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:33:00 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/13 22:02:17 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/15 03:47:35 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ void	init(t_philostruct *p, char **argv)
 		ft_exit(p, "failed to malloc forks\n");
 	p->start = get_good_time();
 	init_mutex(p);
+}
+
+void	ft_exit(t_philostruct *p, char *message)
+{
+	if (message)
+		printf("Error, %s failed\n", message);
+	demallocage(p);
+	exit(1);
 }
 
 void	init_mutex(t_philostruct *p)

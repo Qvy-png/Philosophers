@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+         #
+#    By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 19:07:37 by rdel-agu          #+#    #+#              #
-#    Updated: 2022/07/11 11:19:51 by rdel-agu         ###   ########.fr        #
+#    Updated: 2022/07/15 03:50:21 by qvy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,10 @@ INCL = includes/philosophers.h
 SRC =	src/main.c\
 		src/utils.c\
 		src/init.c\
+		src/routine.c\
+		src/philo_creation.c\
+		src/forks_management.c\
+		src/grailleur_reaper.c\
 		
 all: $(NAME)
 
