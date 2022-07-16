@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:36:12 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/15 03:51:08 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/16 18:07:06 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_philostruct
 
 t_singleton						*s(void);
 
-int								ft_atoi(const char *str);
+long								ft_atoi(const char *str);
 
 void							*reaper(void *content);
 void							*grailleur(void *content);
