@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 03:43:46 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/15 03:44:41 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/16 18:24:59 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	philo_launcher(t_philostruct *p)
 		micro_sleep(p->time_to_die * 1000);
 		printf("\033[0;32m%lu 1 has died\033[0m\n", get_good_time() - p->start);
 	}
+	if (p->num_of_phil == 0 || p->num_of_meals == 0)
+		helper();
 	else
 	{
 		philo_luncher_helper(p);

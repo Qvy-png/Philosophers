@@ -6,7 +6,7 @@
 /*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/16 18:21:08 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/16 18:24:13 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	main(int argc, char **argv)
 		philo_launcher(p);
 		demallocage(p);
 	}
+	else
+		helper();
 	free(p);
 	return (0);
 }
