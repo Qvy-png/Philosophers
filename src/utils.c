@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 23:57:21 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/15 03:47:46 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/16 17:16:29 by rdel-agu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int	i;
-	int	sign;
-	int	number;
+	long	i;
+	int		sign;
+	long	number;
 
 	i = 0;
 	sign = 1;
