@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/16 18:24:13 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/17 19:52:51 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 void	helper(void)
 {
 	printf("WRONG USAGE !\n");
-	printf("\033[0;31mUsage: \033[0m./philo (int)[NUM_OF_PHILO] ");
-	printf("(int)[TIME_TO_DIE] (int)[TIME_TO_EAT] (int)[TIME_TO_SLEEP] ");
-	printf("optionnal->(int)[NUM_OF_MEALS]\n");
+	printf("RANGE = [1 - INT MAX]\n");
+	printf("\033[0;31mUsage: \033[0m./philo [NUM_OF_PHILO] ");
+	printf("[TIME_TO_DIE] [TIME_TO_EAT] [TIME_TO_SLEEP] ");
+	printf("optional->[NUM_OF_MEALS]\n");
 	
 }
 
