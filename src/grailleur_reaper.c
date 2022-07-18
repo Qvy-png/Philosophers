@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 03:40:19 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/15 03:42:17 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/18 02:30:31 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,21 @@ void	*reaper(void *content)
 	t_philostruct	*p;
 	int				i;
 	long unsigned	time_result;
-	int				num_of_phil;
+	int				meal;
 
 	p = (t_philostruct *)content;
 	i = 0;
 	time_result = 0;
-	pthread_mutex_lock(&p->locker);
-	num_of_phil = p->num_of_phil;
-	pthread_mutex_unlock(&p->locker);
+	meal = 0;
 	while (1)
 	{
 		i = -1;
-		while (++i < num_of_phil && p->philo_list[i].last_meal > 0)
+		while (++i < p->num_of_phil)
 		{
 			pthread_mutex_lock(&p->philo_list[i].philo_locker);
-			time_result = get_good_time() - p->philo_list[i].last_meal;
+			meal = p->philo_list[i].last_meal;
+			if (meal > 0)
+				time_result = get_good_time() - p->philo_list[i].last_meal;
 			pthread_mutex_unlock(&p->philo_list[i].philo_locker);
 			if (reaper_helper(p, time_result, i) == 1)
 				return (NULL);

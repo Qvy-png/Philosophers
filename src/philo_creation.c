@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 03:43:46 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/17 19:57:41 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/18 02:31:40 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,15 @@ void	philo_launcher(t_philostruct *p)
 	int	i;
 
 	i = -1;
-	s()->which_philo = 0;
-	if (p->num_of_phil == 1)
+	if (p->num_of_phil == 0 || p->num_of_meals == 0 || p->time_to_die == 0
+		|| p->time_to_eat == 0 || p->time_to_sleep == 0)
+		helper();
+	else if (p->num_of_phil == 1)
 	{
 		printf("%lu 1 has taken a fork\n", get_good_time() - p->start);
 		micro_sleep(p->time_to_die * 1000);
 		printf("\033[0;32m%lu 1 has died\033[0m\n", get_good_time() - p->start);
 	}
-	if (p->num_of_phil == 0 || p->num_of_meals == 0 || p->time_to_die == 0
-		|| p->time_to_eat == 0 || p->time_to_sleep == 0)
-		helper();
 	else
 	{
 		philo_luncher_helper(p);

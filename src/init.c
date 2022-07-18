@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:33:00 by qvy               #+#    #+#             */
-/*   Updated: 2022/07/15 03:47:35 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/18 02:31:49 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	init(t_philostruct *p, char **argv)
 	t_singleton	*single;
 
 	single = s();
+	s()->which_philo = 0;
 	p->num_of_phil = ft_atoi(argv[1]);
 	p->time_to_die = ft_atoi(argv[2]);
 	p->time_to_eat = ft_atoi(argv[3]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-agu <rdel-agu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:36:12 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/16 18:23:29 by rdel-agu         ###   ########.fr       */
+/*   Updated: 2022/07/18 02:50:37 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_philostruct
 
 t_singleton						*s(void);
 
-long								ft_atoi(const char *str);
+long							ft_atoi(const char *str);
 
 void							helper(void);
 void							*reaper(void *content);

@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:24:42 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/17 19:52:51 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/18 02:30:41 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	helper(void)
 	printf("\033[0;31mUsage: \033[0m./philo [NUM_OF_PHILO] ");
 	printf("[TIME_TO_DIE] [TIME_TO_EAT] [TIME_TO_SLEEP] ");
 	printf("optional->[NUM_OF_MEALS]\n");
-	
 }
 
 int	ft_strlen(char *str)
