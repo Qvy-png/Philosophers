@@ -6,7 +6,7 @@
 /*   By: qvy <qvy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:36:12 by rdel-agu          #+#    #+#             */
-/*   Updated: 2022/07/18 02:50:37 by qvy              ###   ########.fr       */
+/*   Updated: 2022/07/18 02:59:00 by qvy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ typedef struct s_philo
 	long unsigned				last_meal;
 	int							num_of_meals;
 	pthread_mutex_t				philo_locker;
-	int							can_sleep;
-	int							can_think;
 }								t_philo;
 
 typedef struct s_philostruct
@@ -44,8 +42,6 @@ typedef struct s_philostruct
 	long unsigned				time_to_sleep;
 	int							num_of_meals;
 	int							can_display;
-	int							which_philo;
-	int							done;
 	pthread_mutex_t				*forks;
 	pthread_mutex_t				locker;
 	pthread_mutex_t				is_talking;
